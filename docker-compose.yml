@@ -1,0 +1,38 @@
+networks:
+  my_custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.211.1.0/24
+
+        
+services:
+  web:
+    # build: .
+    image: ereziko/the-notes-app:latest
+    ports:
+      - "5000:5000"
+    expose:
+      - "5000"
+    networks:
+      my_custom_network:
+        ipv4_address: 172.211.1.2
+    depends_on:
+      - database
+         
+  
+    environment:
+       HOST: '172.211.1.3'  
+       DB_USER: 'root'
+       PASSWORD: 'root'
+       PORT: '3306'
+       MYSQL_ROOT_PASSWORD: 'root'
+
+  database:
+    image: ereziko/custom-db:final
+    networks:
+      my_custom_network:
+        ipv4_address: 172.211.1.3
+        
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
