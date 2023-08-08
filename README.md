@@ -5,7 +5,7 @@
 Make sure you have the python:3.8
 
 ```bash
-git clone https://github.com/ErezBerez111/<repo name>
+git clone https://github.com/ErezBerez111/My-Notes-App.git
 ```
 
 ```bash

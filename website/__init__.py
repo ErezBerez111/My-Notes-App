@@ -45,4 +45,4 @@ def create_database(app):
         db.create_all(app=app)
         print('Created Database!')
 
-# Call create_database(app) here to actually create the database
+
