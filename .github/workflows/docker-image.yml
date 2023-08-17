@@ -22,10 +22,11 @@ jobs:
           python-version: '3.10'
           
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ereziko/the-notes-app:$(date +%s)
+        run: docker build . --file Dockerfile --tag ereziko/the-notes-app:final
 
+      # Uncomment this step if you want to run tests
       # - name: Test Docker image
-      #   run: docker run ereziko/the-notes-app:$(date +%s) python -m unittest discover
+      #   run: docker run ereziko/the-notes-app:final python -m unittest discover
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -33,8 +34,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Tag and push Docker image
-        run: |
-          # IMAGE_ID=$(docker images -q ereziko/the-notes-app:$(date +%s))
-          # docker tag $IMAGE_ID ereziko/the-notes-app:github
-          docker push ereziko/the-notes-app:github
+      - name: Push Docker image
+        run: docker push ereziko/the-notes-app:final
