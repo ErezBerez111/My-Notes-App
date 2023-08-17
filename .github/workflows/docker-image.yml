@@ -24,10 +24,6 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ereziko/the-notes-app:final
 
-      # Uncomment this step if you want to run tests
-      # - name: Test Docker image
-      #   run: docker run ereziko/the-notes-app:final python -m unittest discover
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
