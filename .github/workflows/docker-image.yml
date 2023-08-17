@@ -35,6 +35,6 @@ jobs:
 
       - name: Tag and push Docker image
         run: |
-          IMAGE_ID=$(docker images -q ereziko/the-notes-app:$(date +%s))
-          docker tag $IMAGE_ID ereziko/the-notes-app:github
+          # IMAGE_ID=$(docker images -q ereziko/the-notes-app:$(date +%s))
+          # docker tag $IMAGE_ID ereziko/the-notes-app:github
           docker push ereziko/the-notes-app:github
