@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.db.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  serviceName: {{ .Values.db.svc.name }}
+  replicas: {{ .Values.db.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.db.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.label }}
+    spec:
+      containers:
+        - name: {{ .Values.db.containerName }}
+          image: "{{ .Values.db.image }}:{{ .Values.db.tag }}" 
+          ports:
+            - containerPort: {{ .Values.db.containerPort }}
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: mysql-init-config
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-persistent-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+    - metadata:
+        name: mysql-init-config  
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Mi  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db.svc.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.db.label }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.db.containerPort }}
+      targetPort: {{ .Values.db.svc.targetPort }}

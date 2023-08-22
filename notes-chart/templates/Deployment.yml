@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.webApp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.webApp.label }}
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.webApp.label }}
+    spec:
+      containers:
+        - name: {{ .Values.webApp.containerName }}
+          env:
+            - name: HOST
+              value: mysql.notes-app.svc.cluster.local
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: web-app-secret
+                  key: PASSWORD
+            - name: MYSQL_PORT
+              value: "3306"
+          image: "{{ .Values.webApp.image }}:{{ .Values.webApp.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: {{ .Values.webApp.containerPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.webApp.svc.name }} 
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Values.webApp.label }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.webApp.containerPort }}
+      targetPort: {{ .Values.webApp.svc.targetPort }}
+
+
+
+
+
+
+
+
+
+
+

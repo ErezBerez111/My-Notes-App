@@ -1,0 +1,32 @@
+namespace: notes-app
+
+webApp:
+  name: notes-app-deployment
+  image: ereziko/the-notes-app
+  tag: latest
+  label: notes-app
+  containerName: notes-app-1
+  containerPort: 5000
+  svc:
+    name: notesappservice
+    targetPort: 5000
+
+
+ingress:
+  name: webapp-ingress
+  className: nginx
+  domain: notesap.com
+
+db:
+  name: mysql
+  replicas:
+  label: mysql   
+  containerName: mysql
+  image: mysql
+  tag: 8.0.34
+  containerPort: 3306
+  svc:
+    name: mysql
+    targetPort: 3306
+  
+
