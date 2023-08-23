@@ -26,7 +26,7 @@ spec:
             - name: MYSQL_PORT
               value: "3306"
           image: "{{ .Values.webApp.image }}:{{ .Values.webApp.tag }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: {{ .Values.webApp.containerPort }}
 ---

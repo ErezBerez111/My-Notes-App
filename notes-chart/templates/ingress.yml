@@ -15,6 +15,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.webApp.svcName }}
+            name: {{ .Values.webApp.svc.name }}
             port:
-              number: {{ .Values.webApp.targetPort }}
+              number: {{ .Values.webApp.svc.targetPort }}

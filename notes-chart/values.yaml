@@ -19,7 +19,7 @@ ingress:
 
 db:
   name: mysql
-  replicas:
+  replicas: 2
   label: mysql   
   containerName: mysql
   image: mysql
