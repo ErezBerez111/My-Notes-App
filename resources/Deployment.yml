@@ -25,7 +25,7 @@ spec:
                   key: PASSWORD
             - name: MYSQL_PORT
               value: "3306"
-          image: ereziko/the-notes-app:latest
+          image: ereziko/the-notes-app:${{ steps.commit_hash.outputs.hash }}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
