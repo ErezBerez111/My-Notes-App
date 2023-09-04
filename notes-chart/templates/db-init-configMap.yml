@@ -4,5 +4,4 @@ metadata:
   name: mysql-init-config
   namespace: {{ .Values.namespace }}
 data:
-  init.sql: |-
-    CREATE DATABASE IF NOT EXISTS notesdb;
+  init.sql: CREATE DATABASE IF NOT EXISTS notesdb;

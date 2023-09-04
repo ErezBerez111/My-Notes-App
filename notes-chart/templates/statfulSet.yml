@@ -16,7 +16,13 @@ spec:
     spec:
       containers:
         - name: {{ .Values.db.containerName }}
-          image: "{{ .Values.db.image }}:{{ .Values.db.tag }}" 
+          image: "{{ .Values.db.image }}:{{ .Values.db.tag }}"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: web-app-secret
+                  key: PASSWORD
           ports:
             - containerPort: {{ .Values.db.containerPort }}
           volumeMounts:
@@ -25,21 +31,19 @@ spec:
             - name: mysql-init-config
               mountPath: /docker-entrypoint-initdb.d
               readOnly: true
+      volumes:
+        - name: mysql-init-config
+          configMap:
+            name: mysql-init-config
   volumeClaimTemplates:
     - metadata:
         name: mysql-persistent-storage
       spec:
+        storageClassName: gp2
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
             storage: 1Gi
-    - metadata:
-        name: mysql-init-config  
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 1Mi  
 
 ---
 apiVersion: v1

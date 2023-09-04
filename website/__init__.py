@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path 
 import os
 from flask_login import LoginManager
+from prometheus_flask_exporter import PrometheusMetrics
 
 db = SQLAlchemy()
 
@@ -18,6 +19,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{password}@{host}:{port}/{db_name}'
     db.init_app(app)
 
+    metrics = PrometheusMetrics(app)
 
     from .views import views
     from .auth import auth
