@@ -29,7 +29,7 @@ jobs:
       #     docker network create --driver bridge --subnet 172.111.10.0/24 --gateway 172.111.10.1 test_network‏
 
       - name: run test_db 
-        run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root --network test_network --ip 172.111.10.10  ereziko/custom-db:final
+        run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root ereziko/custom-db:final
       
       - name: Inspect Docker Network
         run: docker inspect test
