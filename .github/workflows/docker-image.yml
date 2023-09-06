@@ -25,11 +25,7 @@ jobs:
         run: echo "::set-output name=hash::$(git rev-parse --short HEAD)"
 
       - name: create network 
-        run: docker network create \
-              --driver bridge \
-              --subnet 172.111.10.0/24 \
-              --gateway 172.111.0.1 \
-              test_network‏
+        run: docker network create --driver bridge --subnet 172.111.10.0/24 --gateway 172.111.0.1 test_network‏
 
       - name: run test_db 
         run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root --network test_network --ip 172.111.10.10  ereziko/custom-db:final
