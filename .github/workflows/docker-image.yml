@@ -24,8 +24,13 @@ jobs:
         id: commit_hash
         run: echo "::set-output name=hash::$(git rev-parse --short HEAD)"
 
-      - name: create network 
-        run: docker network create --driver bridge --subnet 172.111.10.0/24 --gateway 172.111.10.1 test_network && docker network inspect test_network‏
+      - name: Create Docker Network
+        run: |
+          docker network create --driver bridge --subnet 172.111.10.0/24 --gateway 172.111.10.1 test_network
+          continue-on-error: true # Continue even if the network creation fails
+
+      - name: Inspect Docker Network
+        run: docker network inspect test_network‏
 
       - name: run test_db 
         run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root --network test_network --ip 172.111.10.10  ereziko/custom-db:final
