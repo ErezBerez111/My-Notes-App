@@ -30,6 +30,7 @@ jobs:
           PASSWORD: "root"
           DB_USER: "root"
           DB_NAME: "notesdb"
+        run: echo $PORT $HOST $DB_USER $DB_NAME
 
         
 
