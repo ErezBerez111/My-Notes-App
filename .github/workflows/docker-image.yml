@@ -24,6 +24,12 @@ jobs:
         id: commit_hash
         run: echo "::set-output name=hash::$(git rev-parse --short HEAD)"
 
+      - name: run test_db 
+        run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root --network bridge --ip 172.17.0.2 ereziko/custom-db:final
+
+      - name: test code
+        run: python3 test.py
+
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ereziko/the-notes-app:${{ steps.commit_hash.outputs.hash }}
 
