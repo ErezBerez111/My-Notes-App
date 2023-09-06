@@ -9,7 +9,7 @@ db = SQLAlchemy()
 
 def create_app():
     port = os.getenv('PORT', '3306')
-    host = os.getenv('HOST', '172.17.0.2')
+    host = os.getenv('HOST', '172.111.10.10')
     password = os.getenv('PASSWORD', 'root')
     db_user = os.getenv('DB_USER', 'root')
     db_name = os.getenv('DB_NAME', 'notesdb')  
