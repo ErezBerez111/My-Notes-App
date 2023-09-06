@@ -19,13 +19,23 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+          
+      - name: Install Dependencies
+        run: pip3 install -r requirements.txt
 
       - name: Get short commit hash
         id: commit_hash
         run: echo "::set-output name=hash::$(git rev-parse --short HEAD)"
 
+      # - name: Create Docker Network
+      #   run: |
+      #     docker network create --driver bridge --subnet 172.111.10.0/24 --gateway 172.111.10.1 test_network‏
+
       - name: run test_db 
-        run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root --network bridge --ip 172.17.0.2 ereziko/custom-db:final
+        run: docker run -d --name test -e MYSQL_ROOT_PASSWORD=root ereziko/custom-db:final
+      
+      - name: Inspect Docker Network
+        run: docker inspect test
 
       - name: test code
         run: python3 test.py
