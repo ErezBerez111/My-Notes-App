@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: notes-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/ErezBerez111/My-Notes-App.git
+    targetRevision: HEAD
+    path: notes-chart/
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: notes-app
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true  
+
+
+

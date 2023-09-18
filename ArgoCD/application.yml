@@ -1,0 +1,31 @@
+# to start all relavent containers just run:
+# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# k port-forward svc/argocd-server -n argocd 9000:443
+# k get secret argocd-initial-admin-secret -o yaml
+# user is "admin"
+# echo Vmh6dmdMMEprd3U4YmhraQ== | base64 --decode  
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: notes-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/ErezBerez111/My-Notes-App.git
+    targetRevision: HEAD
+    path: resources
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: notes-app
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true       
+

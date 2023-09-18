@@ -1,0 +1,4 @@
+user: admin
+pw: kubectl exec --namespace jenkins -it svc/first-release-jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
+
+which basicly is:  rChOElAiIYuGOShIcYzTn0

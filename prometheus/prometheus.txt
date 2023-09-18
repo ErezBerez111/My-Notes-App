@@ -1,0 +1,48 @@
+instalation and basic configuration with helm chart of prometheus:
+
+- https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+
+1. - helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+
+
+
+
+configuring prometheus to report metrics of any service i choose:
+
+
+1. for every k8 service, inorder to see its metrics, a proper exporter for it must be configured
+    configure: 
+        - a proper uri
+        - the correct label in order for prometheus to scrape the metrics of that certain resorce(release: prometheus ) in my case
+
+for example:
+
+mysql:
+  uri: "mysql//:<name of service>:<service port>"
+
+serviceMonitor:
+  additionalLables:
+    release: prometheus
+
+
+2. after this is configured you can install the exporter for the desirde resorce
+
+exmp: helm install <realese name> prometheus-community/prometheus-mysql-exporter -f <values i want to inject>
+
+then check: 
+
+ after i launched the mysql exporter it created:
+    - the exporter itsel ( run kgp)
+    - a service for that pod (k get svc)
+    *** it was suposed to create a servicemonitor but it didnt ( check why)
+
+3. after that run the following command to see its metrics:
+- k port-forward svc/<svc name of the created exporter> <port of that svc>
+
+
+
+____________________________________________________________________________________________________________________________
+
+
+for some reason servicemonitor for my mysql dataase is not beaing created
+

@@ -1,0 +1,93 @@
+* = not a must
+
+k8 helm chart:
+* add rediness an liveness probs to resorces
+
+* Finish Jenkins pipline:
+ - create my own jenkins agent with docker file
+ - replace jenkins agent deployment with statefulSet(?)
+ - finish up my basic pipeline
+
+
+CI Pipeline:
+- add unit test job to pipeline
+* add Linting and Code Analysis
+- CI pipeline for my ifrastructure repo
+
+CD Pipeline:
+- if fails, have it send a message on slack
+
+what are the steps to make argo cd deploy all these steps?
+
+ArgoCD:
+- deploy: 
+- my notes helm chart
+- prometheus helm chart
+- mysql exporter 
+
+
+prometheus:
+
+- add monitoring exporter for my flask app
+
+
+
+
+
+Terraform:
+
+ - auto scalling
+ - load balancer
+ - secrets managment
+ - backup and recovery
+ - Add Helm chart of my project
+ - if my cluster is down, where is my data saved?
+ - have argocd activate the apllication file in my Git repo
+
+ EKS:
+ * understand much better
+
+*************************************************************************************************************** 
+
+
+Test changes when EKS is up:
+
+
+
+***************************************************************************
+
+connecting my app with the DB on EKS using Helm Chart:
+
+- when i tried to launch my app and it didnt initialize
+due to " notesdb not found, it was because it didnt create the notesdb DB in the mysql data base.
+to check this i ran:" CREATE DATABASE IF NOT EXISTS notesdb; " inside one of the mysql DB
+this worked bit obviously this is not an ideal solution, so i uninstalled the helm chart, and when i installed it again it worked without
+running the CREATE.... command, very weird...
+
+
+
+
+
+csrf
+payload
+host header
+sni
+h1 and h2 protocol
+request headers
+TTL
+trace route
+diffrence between TCP UDP ICMP
+levels of the handshake
+gpu on instances
+
+
+
+
+
+
+
+Argo CD:
+- if changes pulled and app isnt healthy:
+1. send notification
+2. roleback to recent image/version
+
